@@ -4,7 +4,7 @@ namespace :db do
   desc 'Importes images.'
   task :import_images => :environment do
 
-    Find.find(folder) do |path|
+    Find.find(IMAGE_FOLDER) do |path|
       if path =~ /r_000_64x64.png$/
         Image.create!(path: path.gsub(IMAGE_FOLDER, ''))
       end
