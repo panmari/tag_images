@@ -1,21 +1,33 @@
 require 'find'
 
 namespace :db do
+
+  IMAGE_FOLDER = '/home/mazzzy/Downloads/images/'
+
   desc 'Importes images.'
   task :import_images => :environment do
-    folder = '/home/mazzzy/Downloads/images'
 
     Find.find(folder) do |path|
       if path =~ /r_000_64x64.png$/
-        Image.create!(path: path.gsub('/home/mazzzy/Downloads/images/', ''))
+        Image.create!(path: path.gsub(IMAGE_FOLDER, ''))
       end
     end
   end
 
-  desc 'Create initial tags'
-  task :import_tags => :environment do
-    ['Ok', 'Two parts', 'Default material only', 'Strange normals'].each do |t|
-      ActsAsTaggableOn::Tag.create!(name: t)
+  task :export_images => :environment do
+    File.open('ok_shaded_images.txt', 'w') do |f_shaded|
+      File.open('ok_albedo_images.txt', 'w') do |f_albedo|
+        File.open('ok_depth_images.txt', 'w') do |f_depth|
+          File.open('ok_normal_images.txt', 'w') do |f_normal|
+            Image.tagged_with('Ok').order(:path).find_each do |img|
+              f_shaded.puts(IMAGE_FOLDER + img.path)
+              f_albedo.puts(IMAGE_FOLDER + img.albedo_path)
+              f_depth.puts(IMAGE_FOLDER + img.depth_path)
+              f_normal.puts(IMAGE_FOLDER + img.normal_path)
+            end
+          end
+        end
+      end
     end
   end
 end

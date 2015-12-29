@@ -9,6 +9,10 @@ class Image < ActiveRecord::Base
     self.path.gsub('64x64.png', '')
   end
 
+  def full_shaded_path(rotation='000')
+    self.path.gsub('_64x64', '').gsub('r_000', "r_#{rotation}")
+  end
+
   def shaded_path
     self.path
   end

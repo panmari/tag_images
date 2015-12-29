@@ -8,6 +8,8 @@
   <strong>Tags</strong>
   <%= @image.tag_list %>
 </p>
+<%= image_tag serve_images_path(@image.full_shaded_path) %>
+<%= image_tag serve_images_path(@image.full_shaded_path('288')) %>
 
 <%= image_tag serve_images_path(@image.shaded_path) %>
 <%= image_tag serve_images_path(@image.albedo_path) %>

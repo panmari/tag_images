@@ -1,10 +1,16 @@
 class ImagesController < ApplicationController
-  before_action :set_image, only: [:show, :edit, :update, :destroy]
+  before_action :set_image, only: [:show, :edit, :update, :destroy, :tag]
 
   # GET /images
   # GET /images.json
   def index
-    @images = Image.paginate(:page => params[:page])
+    @images = if params[:untagged_only]
+                Image.joins(%Q{LEFT JOIN taggings ON taggings.taggable_id=images.id AND taggings.taggable_type='Image'}).
+                    where('taggings.id IS NULL')
+              else
+                Image.all
+              end
+    @images = @images.paginate(:page => params[:page])
   end
 
   # GET /images/1
@@ -37,6 +43,12 @@ class ImagesController < ApplicationController
                :disposition => 'inline',
                :type => 'image/png',
                :x_sendfile => true )
+  end
+
+  def tag
+    @image.tag_list << params[:tag]
+    @image.save!
+    render json: { status: 'success' }
   end
 
   # DELETE /images/1
