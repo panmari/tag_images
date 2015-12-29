@@ -8,7 +8,7 @@ class ImagesController < ApplicationController
                 Image.joins(%Q{LEFT JOIN taggings ON taggings.taggable_id=images.id AND taggings.taggable_type='Image'}).
                     where('taggings.id IS NULL')
               else
-                Image.all
+                Image.includes(:tags).all
               end
     @images = @images.paginate(:page => params[:page])
   end

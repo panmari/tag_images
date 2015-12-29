@@ -18,7 +18,7 @@
       <tr>
         <td><%= image.shapenet_identifier %></td>
         <td><%= image_tag serve_images_path(image.shaded_path) %></td>
-        <td><%= image.tag_list %></td>
+        <td><%= image.tags.map(&:name).join(',') %></td>
         <td><%= link_to 'Show', image %></td>
         <td><%= link_to 'Ok', tag_image_path(image,  tag: 'Ok'), remote: true %></td>
         <td><%= link_to 'Default material only', tag_image_path(image,  tag: 'Default material only'), remote: true %></td>
