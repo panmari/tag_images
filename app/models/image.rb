@@ -14,19 +14,19 @@ class Image < ActiveRecord::Base
   end
 
   def shaded_path
-    self.path
+    full_shaded_path
   end
 
   def albedo_path
-    stem + 'albedo.png0001_64x64.png'
+    stem + 'albedo.png0001.png'
   end
 
   def depth_path
-    stem + 'depth.png0001_64x64.png'
+    stem + 'depth.png0001.png'
   end
 
   def normal_path
-    stem + 'normal.png0001_64x64.png'
+    stem + 'normal.png0001.png'
   end
 
 end

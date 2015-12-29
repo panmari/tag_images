@@ -16,17 +16,18 @@
   <tbody>
     <% @images.each do |image| %>
       <tr>
-        <td><%= image.shapenet_identifier %></td>
-        <td><%= image_tag serve_images_path(image.shaded_path) %></td>
+        <td><%= image.shapenet_identifier %><br/>
+        <td><%= image_tag serve_images_path(image.full_shaded_path) %></td>
         <td><%= image.tags.map(&:name).join(',') %></td>
         <td><%= link_to 'Show', image %></td>
-        <td><%= link_to 'Ok', tag_image_path(image,  tag: 'Ok'), remote: true %></td>
-        <td><%= link_to 'Default material only', tag_image_path(image,  tag: 'Default material only'), remote: true %></td>
-        <td><%= link_to 'Strange normals', tag_image_path(image,  tag: 'Strange normals'), remote: true %></td>
-        <td><%= link_to 'Strange albedo', tag_image_path(image,  tag: 'Just strange'), remote: true %></td>
-        <td><%= link_to 'Two parts', tag_image_path(image,  tag: 'Two parts'), remote: true %></td>
-        <td><%= link_to 'Just strange', tag_image_path(image,  tag: 'Just strange'), remote: true %></td>
-
+        <td>
+        <%= link_to 'Ok', tag_image_path(image,  tag: 'Ok'), remote: true %><br/>
+        <%= link_to 'Default material only', tag_image_path(image,  tag: 'Default material only'), remote: true %><br/>
+        <%= link_to 'Strange normals', tag_image_path(image,  tag: 'Strange normals'), remote: true %><br/>
+        <%= link_to 'Strange albedo', tag_image_path(image,  tag: 'Just strange'), remote: true %><br/>
+        <%= link_to 'Two parts', tag_image_path(image,  tag: 'Two parts'), remote: true %><br/>
+        <%= link_to 'Just strange', tag_image_path(image,  tag: 'Just strange'), remote: true %><br/>
+        </td>
       </tr>
     <% end %>
   </tbody>
