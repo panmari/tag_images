@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Images</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Path</th>
+      <th>Img</th>
+      <th>tags</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @images.each do |image| %>
+      <tr>
+        <td><%= image.shapenet_identifier %></td>
+        <td><%= image_tag serve_images_path(image.shaded_path) %></td>
+        <td><%= image.tag_list %></td>
+        <td><%= link_to 'Show', image %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Image', new_image_path %>

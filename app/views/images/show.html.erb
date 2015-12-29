@@ -1,0 +1,22 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Shapenet identifier</strong>
+  <%= @image.shapenet_identifier %>
+</p>
+<p>
+  <strong>Tags</strong>
+  <%= @image.tag_list %>
+</p>
+
+<%= image_tag serve_images_path(@image.shaded_path) %>
+<%= image_tag serve_images_path(@image.albedo_path) %>
+<%= image_tag serve_images_path(@image.normal_path) %>
+<%= image_tag serve_images_path(@image.depth_path) %>
+
+<%= form_for @image do |f| %>
+    <%= f.select(:tag_list, ActsAsTaggableOn::Tag.all, {}, {multiple: true}) %>
+    <%= f.submit %>
+<% end %>
+<%= link_to 'Edit', edit_image_path(@image) %> |
+<%= link_to 'Back', images_path %>
