@@ -1,0 +1,1 @@
+IMAGE_FOLDER = '/home/mazzzy/Downloads/images/'

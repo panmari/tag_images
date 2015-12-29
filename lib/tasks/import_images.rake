@@ -1,9 +1,6 @@
 require 'find'
 
 namespace :db do
-
-  IMAGE_FOLDER = '/home/mazzzy/Downloads/images/'
-
   desc 'Importes images.'
   task :import_images => :environment do
 

@@ -37,7 +37,7 @@ class ImagesController < ApplicationController
   end
 
   def serve
-    path = "/home/mazzzy/Downloads/images/#{params[:filename]}"
+    path = IMAGE_FOLDER + params[:filename]
 
     send_file( path,
                :disposition => 'inline',
