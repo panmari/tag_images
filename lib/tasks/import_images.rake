@@ -1,4 +1,6 @@
 require 'find'
+require 'parallel'
+require_relative 'image_helpers'
 
 namespace :db do
   desc 'Importes images.'
@@ -9,6 +11,18 @@ namespace :db do
         Image.create!(path: path.gsub(IMAGE_FOLDER, ''))
       end
     end
+  end
+
+  desc 'Tasks all gray only images as such'
+  task :tag_default_material_images => :environment do
+    Parallel.each(Image.all, progress: 'Tagging') do |image|
+      # If first is solid gray and others some shade of gray, then we tag it as default only.
+      if with_default_material_only?(IMAGE_FOLDER + image.albedo_path)
+        image.tag_list << 'Default material only'
+        image.save!
+      end
+    end
+    puts "Tagged #{Image.tagged_with('Default material only').count} of #{Image.count}"
   end
 
   task :export_images => :environment do

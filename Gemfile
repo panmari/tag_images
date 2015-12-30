@@ -29,6 +29,9 @@ gem 'acts-as-taggable-on'
 gem 'bootstrap', '~> 4.0.0.alpha3'
 gem 'will_paginate', '~> 3.0.6'
 
+gem 'ruby-progressbar'
+gem 'parallel'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
