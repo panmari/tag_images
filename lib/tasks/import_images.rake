@@ -18,8 +18,10 @@ namespace :db do
     Parallel.each(Image.all, progress: 'Tagging') do |image|
       # If first is solid gray and others some shade of gray, then we tag it as default only.
       if with_default_material_only?(IMAGE_FOLDER + image.albedo_path)
-        image.tag_list << 'Default material only'
-        image.save!
+        ActiveRecord::Base.connection_pool.with_connection do
+          image.tag_list << 'Default material only'
+          image.save!
+        end
       end
     end
     puts "Tagged #{Image.tagged_with('Default material only').count} of #{Image.count}"
