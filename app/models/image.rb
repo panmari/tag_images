@@ -29,4 +29,7 @@ class Image < ActiveRecord::Base
     stem + 'normal.png0001.png'
   end
 
+  def sketch_path
+    stem.gsub(IMAGE_FOLDER, SKETCH_FOLDER) + 'sketch.png'
+  end
 end

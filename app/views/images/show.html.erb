@@ -14,6 +14,7 @@
 <%= image_tag serve_images_path(@image.albedo_path) %>
 <%= image_tag serve_images_path(@image.normal_path) %>
 <%= image_tag serve_images_path(@image.depth_path) %>
+<%= image_tag serve_images_path(@image.sketch_path) %>
 
 <%= form_for @image do |f| %>
     <%= f.select(:tag_list, ActsAsTaggableOn::Tag.all, {}, {multiple: true}) %>

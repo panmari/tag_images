@@ -15,7 +15,7 @@ namespace :db do
 
   desc 'Tasks all gray only images as such'
   task :tag_default_material_images => :environment do
-    Parallel.each(Image.all, progress: 'Tagging') do |image|
+    Parallel.each(Image.all, progress: 'Tagging', :in_threads => 0) do |image|
       # If first is solid gray and others some shade of gray, then we tag it as default only.
       if with_default_material_only?(IMAGE_FOLDER + image.albedo_path)
         ActiveRecord::Base.connection_pool.with_connection do
@@ -27,6 +27,7 @@ namespace :db do
     puts "Tagged #{Image.tagged_with('Default material only').count} of #{Image.count}"
   end
 
+  desc 'Dumps names of all images tagged as ok to files'
   task :export_images => :environment do
     File.open('ok_shaded_images.txt', 'w') do |f_shaded|
       File.open('ok_albedo_images.txt', 'w') do |f_albedo|

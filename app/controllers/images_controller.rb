@@ -37,8 +37,12 @@ class ImagesController < ApplicationController
   end
 
   def serve
-    path = IMAGE_FOLDER + params[:filename]
-
+    f = params[:filename]
+    path = if f.include? 'sketch'
+             SKETCH_FOLDER + f
+           else
+             IMAGE_FOLDER + f
+           end
     send_file( path,
                :disposition => 'inline',
                :type => 'image/png',
