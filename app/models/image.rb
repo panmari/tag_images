@@ -13,6 +13,14 @@ class Image < ActiveRecord::Base
     self.path.gsub('_64x64', '').gsub('r_000', "r_#{rotation}")
   end
 
+  def small_shaded_path
+    self.path
+  end
+
+  def small_sketch_path
+    self.path.gsub(IMAGE_FOLDER, SKETCH_FOLDER) + 'sketch.png'
+  end
+
   def shaded_path
     full_shaded_path
   end

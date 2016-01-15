@@ -13,6 +13,11 @@ class ImagesController < ApplicationController
     @images = @images.paginate(:page => params[:page])
   end
 
+  def overview
+    @tag = params[:tag] || 'Ok'
+    @images = Image.tagged_with(@tag, :exclude => true).order("RANDOM()").limit(100)
+  end
+
   # GET /images/1
   # GET /images/1.json
   def show

@@ -1,0 +1,17 @@
+Click images to tag them with <%= @tag %>, <%= link_to 'refresh images', overview_images_path(tag: @tag) %>
+<table class="table">
+  <tbody>
+  <% @images.each_slice(4) do |image_slice| %>
+      <tr>
+        <% image_slice.each do |image| %>
+            <td>
+              <%= link_to image_tag(serve_images_path(image.small_shaded_path)), tag_image_path(image, tag: @tag),
+                          remote: true %>
+              <%= link_to image_tag(serve_images_path(image.small_sketch_path)), tag_image_path(image, tag: @tag),
+                          remote: true %>
+            </td>
+        <% end %>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
