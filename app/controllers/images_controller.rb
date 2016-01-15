@@ -16,6 +16,7 @@ class ImagesController < ApplicationController
   def overview
     @tag = params[:tag] || 'Ok'
     @images = Image.tagged_with(@tag, :exclude => true).order("RANDOM()").limit(100)
+    @tagged_count = Image.tagged_with(@tag).count
   end
 
   # GET /images/1

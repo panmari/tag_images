@@ -1,13 +1,15 @@
-Click images to tag them with <%= @tag %>, <%= link_to 'refresh images', overview_images_path(tag: @tag) %>
+Click images to tag them with <%= @tag %> (right now there are <%= @tagged_count %> tagged with this)
+<br/>
+<%= link_to 'refresh images', overview_images_path(tag: @tag) %>
 <table class="table">
   <tbody>
   <% @images.each_slice(4) do |image_slice| %>
       <tr>
         <% image_slice.each do |image| %>
             <td>
-              <%= link_to image_tag(serve_images_path(image.small_shaded_path)), tag_image_path(image, tag: @tag),
+              <%= link_to image_tag(serve_images_path(image.shaded_path(64))), tag_image_path(image, tag: @tag),
                           remote: true %>
-              <%= link_to image_tag(serve_images_path(image.small_sketch_path)), tag_image_path(image, tag: @tag),
+              <%= link_to image_tag(serve_images_path(image.sketch_path(64))), tag_image_path(image, tag: @tag),
                           remote: true %>
             </td>
         <% end %>
@@ -15,3 +17,4 @@ Click images to tag them with <%= @tag %>, <%= link_to 'refresh images', overvie
   <% end %>
   </tbody>
 </table>
+<%= link_to 'refresh images', overview_images_path(tag: @tag) %>
