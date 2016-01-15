@@ -29,15 +29,19 @@ namespace :db do
 
   desc 'Dumps names of all images tagged as ok to files'
   task :export_images => :environment do
+    size = 64
     File.open('ok_shaded_images.txt', 'w') do |f_shaded|
       File.open('ok_albedo_images.txt', 'w') do |f_albedo|
         File.open('ok_depth_images.txt', 'w') do |f_depth|
           File.open('ok_normal_images.txt', 'w') do |f_normal|
-            Image.tagged_with('Ok').order(:path).find_each do |img|
-              f_shaded.puts(IMAGE_FOLDER + img.path)
-              f_albedo.puts(IMAGE_FOLDER + img.albedo_path)
-              f_depth.puts(IMAGE_FOLDER + img.depth_path)
-              f_normal.puts(IMAGE_FOLDER + img.normal_path)
+            File.open('ok_sketch_images.txt', 'w') do |f_sketch|             
+              Image.tagged_with('Ok').order(:path).find_each do |img|
+                f_shaded.puts(IMAGE_FOLDER + img.shaded_path(size))
+                f_albedo.puts(IMAGE_FOLDER + img.albedo_path(size))
+                f_depth.puts(IMAGE_FOLDER + img.depth_path(size))
+                f_normal.puts(IMAGE_FOLDER + img.normal_path(size))
+                f_sketch.puts(SKETCH_FOLDER + img.sketch_path(size))            
+              end
             end
           end
         end

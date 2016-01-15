@@ -13,23 +13,33 @@ class Image < ActiveRecord::Base
     self.path.gsub('_64x64', '').gsub('r_000', "r_#{rotation}")
   end
 
-  def shaded_path
-    full_shaded_path
+  def shaded_path(size=nil)
+    stem[0..-2] + suffix_from(size)
   end
 
-  def albedo_path
-    stem + 'albedo.png0001.png'
+  def albedo_path(size=nil)
+    stem + 'albedo.png0001' + suffix_from(size)
   end
 
-  def depth_path
-    stem + 'depth.png0001.png'
+  def depth_path(size=nil)
+    stem + 'depth.png0001' + suffix_from(size)
   end
 
-  def normal_path
-    stem + 'normal.png0001.png'
+  def normal_path(size=nil)
+    stem + 'normal.png0001' + suffix_from(size)
   end
 
-  def sketch_path
-    stem.gsub(IMAGE_FOLDER, SKETCH_FOLDER) + 'sketch.png'
+  def sketch_path(size=nil)
+    stem.gsub(IMAGE_FOLDER, SKETCH_FOLDER) + 'sketch' + suffix_from(size)
+  end
+
+  private
+
+  def suffix_from(size=nil)
+    if size
+      "_#{size}x#{size}.png"
+    else
+      '.png'
+    end
   end
 end
