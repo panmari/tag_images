@@ -41,11 +41,13 @@ namespace :db do
           File.open(t + '_normal_images.txt', 'w') do |f_normal|
             File.open(t + '_sketch_images.txt', 'w') do |f_sketch|
               Image.tagged_with(t).order(:path).find_each do |img|
-                f_shaded.puts(IMAGE_FOLDER + img.shaded_path(size))
-                f_albedo.puts(IMAGE_FOLDER + img.albedo_path(size))
-                f_depth.puts(IMAGE_FOLDER + img.depth_path(size))
-                f_normal.puts(IMAGE_FOLDER + img.normal_path(size))
-                f_sketch.puts(SKETCH_FOLDER + img.sketch_path(size))            
+                Image::AVAILABLE_ROTATIONS.each do |r|
+                  f_shaded.puts(IMAGE_FOLDER + img.shaded_path(size, r))
+                  f_albedo.puts(IMAGE_FOLDER + img.albedo_path(size, r))
+                  f_depth.puts(IMAGE_FOLDER + img.depth_path(size, r))
+                  f_normal.puts(IMAGE_FOLDER + img.normal_path(size, r))
+                  f_sketch.puts(SKETCH_FOLDER + img.sketch_path(size, r))
+                end
               end
             end
           end
