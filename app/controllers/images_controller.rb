@@ -15,7 +15,11 @@ class ImagesController < ApplicationController
 
   def overview
     @tag = params[:tag] || 'Ok'
-    @images = Image.tagged_with(@tag, :exclude => true).order("RANDOM()").limit(100)
+    if params[:show_tagged]
+      @images = Image.tagged_with(@tag)
+    else
+      @images = Image.tagged_with(@tag, :exclude => true).order("RANDOM()").limit(100)
+    end
     @tagged_count = Image.tagged_with(@tag).count
   end
 
@@ -56,7 +60,12 @@ class ImagesController < ApplicationController
   end
 
   def tag
-    @image.tag_list << params[:tag]
+    tag = params[:tag]
+    if @image.tag_list.include?(tag)
+      @image.tag_list.remove(tag)
+    else
+      @image.tag_list << params[:tag]
+    end
     @image.save!
     render json: { status: 'success' }
   end
