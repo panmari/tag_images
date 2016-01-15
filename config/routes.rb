@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   resources :images do
     collection do
       get '/serve/:filename' => 'images#serve', as: :serve, constraints: { filename: /.+/ }
+      get 'overview'
     end
     member do
       get 'tag'
