@@ -29,13 +29,18 @@ namespace :db do
 
   desc 'Dumps names of all images tagged as ok to files'
   task :export_images => :environment do
+    tags = ActsAsTaggableOn::Tag.all
+    puts(tags.map(&:name).each_with_index.map {|name, idx| "#{idx}) #{name}"}.to_a)
+    output_tag = STDIN.gets.strip
+    t = tags[output_tag.to_i].name
+    puts 'Dumping images with tag ' + t
     size = 64
-    File.open('ok_shaded_images.txt', 'w') do |f_shaded|
-      File.open('ok_albedo_images.txt', 'w') do |f_albedo|
-        File.open('ok_depth_images.txt', 'w') do |f_depth|
-          File.open('ok_normal_images.txt', 'w') do |f_normal|
-            File.open('ok_sketch_images.txt', 'w') do |f_sketch|             
-              Image.tagged_with('Ok').order(:path).find_each do |img|
+    File.open(t + '_shaded_images.txt', 'w') do |f_shaded|
+      File.open(t + '_albedo_images.txt', 'w') do |f_albedo|
+        File.open(t + '_depth_images.txt', 'w') do |f_depth|
+          File.open(t + '_normal_images.txt', 'w') do |f_normal|
+            File.open(t + '_sketch_images.txt', 'w') do |f_sketch|
+              Image.tagged_with(t).order(:path).find_each do |img|
                 f_shaded.puts(IMAGE_FOLDER + img.shaded_path(size))
                 f_albedo.puts(IMAGE_FOLDER + img.albedo_path(size))
                 f_depth.puts(IMAGE_FOLDER + img.depth_path(size))
