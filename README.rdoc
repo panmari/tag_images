@@ -1,28 +1,13 @@
-== README
+== Tag images
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A small application that helps tagging images.
 
-Things you may want to cover:
+Tags can then be exported through various rake tasks.
 
-* Ruby version
+=== Tagging images
 
-* System dependencies
+Start tagging by visiting /images.
 
-* Configuration
+=== View tagged images
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+Go to /images/overview?show_tagged=true to see tagged images. By default images with the tag 'OK' are shown, but you can specify your flag of interest using the url /images/overview?show_tagged=true&tag=your_tag.
